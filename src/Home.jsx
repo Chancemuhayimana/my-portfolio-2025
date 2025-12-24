@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { slide as Menu } from "react-burger-menu";
 import emailjs from "@emailjs/browser";
 import profileImage from "./assets/my-photo.jpg";
-import resumePDF from "../resume.pdf";
+import resumePDF from "./assets/resume.pdf";
 import {
   FaLaptopCode,
   FaRobot,
