@@ -214,7 +214,7 @@ const Education = () => (
       <EduCard>
         <FaCertificate size={36} color="#0af" />
         <h3>Virtual Assistant</h3>
-        <p className="institution">ALX</p>
+        <p className="institution">ALX Africa</p>
         <p className="year">Issued: October 2024</p>
       </EduCard>
 
