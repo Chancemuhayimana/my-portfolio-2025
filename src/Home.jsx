@@ -382,12 +382,12 @@ const Education = () => (
           <p className="year">Issued: Feb 2026</p>
         </EduCard>
 
-        <EduCard>
-          <FaCertificate size={30} />
-          <h3>Virtual Assistant</h3>
-          <p className="institution">ALX</p>
-          <p className="year">Issued: October 2024</p>
-        </EduCard>
+      <EduCard>
+        <FaCertificate size={36} color="#0af" />
+        <h3>Virtual Assistant</h3>
+        <p className="institution">ALX</p>
+        <p className="year">Issued: October 2024</p>
+      </EduCard>
 
         <EduCard>
           <FaCertificate size={30} />
