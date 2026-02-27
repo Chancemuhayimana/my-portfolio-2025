@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled, { createGlobalStyle, keyframes } from "styled-components";
 import { slide as Menu } from "react-burger-menu";
 import emailjs from "@emailjs/browser";
-import profileImage from "./assets/pa.png";
+import profileImage from "./assets/Pa.png";
 import resumePDF from "./assets/resume.pdf";
 import {
   FaArrowRight,
