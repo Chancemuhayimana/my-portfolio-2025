@@ -1,236 +1,412 @@
-// src/App.jsx
-import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
+import React, { useEffect, useRef, useState } from "react";
+import styled, { createGlobalStyle, keyframes } from "styled-components";
 import { slide as Menu } from "react-burger-menu";
 import emailjs from "@emailjs/browser";
-import profileImage from "./assets/my-photo.jpg";
+import profileImage from "./assets/pa.png";
 import resumePDF from "./assets/resume.pdf";
 import {
-  FaLaptopCode,
-  FaRobot,
-  FaNetworkWired,
+  FaArrowRight,
+  FaCertificate,
   FaCogs,
-  FaGithub,
-  FaLinkedin,
-  FaInstagram,
   FaFacebook,
-  FaTiktok,
+  FaGithub,
+  FaGraduationCap,
+  FaInstagram,
+  FaLaptopCode,
+  FaLinkedin,
+  FaNetworkWired,
+  FaPaintBrush,
   FaPhone,
+  FaRobot,
+  FaTiktok,
+  FaVideo,
 } from "react-icons/fa";
+import { FaUserTie, FaXTwitter, FaYoutube } from "react-icons/fa6";
 import { Link } from "react-scroll";
-import { FaPeopleGroup, FaXTwitter } from "react-icons/fa6";
-import { FaGraduationCap, FaCertificate } from "react-icons/fa";
 
-// ---------- NAVBAR ----------
+const roles = [
+  {
+    icon: <FaUserTie size={22} />,
+    title: "Freelancer",
+    description:
+      "I build custom web applications and automation solutions for startups, founders, and local businesses.",
+  },
+  {
+    icon: <FaYoutube size={22} />,
+    title: "YouTube Tech",
+    description:
+      "I create practical tech content, coding walkthroughs, and tutorials to help people learn fast.",
+  },
+  {
+    icon: <FaPaintBrush size={22} />,
+    title: "UI/UX Designer",
+    description:
+      "I design clear interfaces and user flows that look modern and convert visitors into users.",
+  },
+  {
+    icon: <FaLaptopCode size={22} />,
+    title: "Full-Stack Developer",
+    description:
+      "I deliver performant, maintainable products with React, Node.js, APIs, and scalable architecture.",
+  },
+];
+
+const services = [
+  { icon: <FaLaptopCode size={28} />, title: "Web Development" },
+  { icon: <FaRobot size={28} />, title: "AI & Chatbot Solutions" },
+  { icon: <FaCogs size={28} />, title: "Automation & Integrations" },
+  { icon: <FaNetworkWired size={28} />, title: "IT Support & Networking" },
+  { icon: <FaVideo size={28} />, title: "Tech Content Production" },
+];
+
+const skillItems = [
+  "React",
+  "JavaScript",
+  "TypeScript",
+  "Node.js",
+  "Python",
+  "Java",
+  "HTML/CSS",
+  "Styled Components",
+  "REST APIs",
+  "MySQL",
+  "MongoDB",
+  "Git/GitHub",
+  "UI/UX Design",
+  "Problem Solving",
+  "Team Collaboration",
+];
+
+const projectItems = [
+  {
+    href: "https://github.com/Chancemuhayimana/portfolio-vite",
+    img: "/portifolio.png",
+    alt: "Portfolio Website",
+    title: "Portfolio Website",
+    summary: "Modern personal portfolio focused on conversion and strong visual identity.",
+    stack: "React, Vite, Styled Components",
+  },
+  {
+    href: "https://github.com/Chancemuhayimana/",
+    img: "/music-player.jpg",
+    alt: "Music Player",
+    title: "Music Player",
+    summary: "Web music app with playlists and clean user experience.",
+    stack: "React, Node.js, Express",
+  },
+  {
+    href: "https://github.com/Chancemuhayimana/",
+    img: "/quiz.jpg",
+    alt: "AI Quiz Generator",
+    title: "AI Quiz Generator",
+    summary: "Dynamic question generator powered by AI models.",
+    stack: "Python, Flask, OpenAI API",
+  },
+  {
+    href: "https://github.com/Chancemuhayimana/",
+    img: "/chatbot.jpg",
+    alt: "Therapist Chatbot",
+    title: "Therapist Chatbot",
+    summary: "Conversational app built to provide guided support experiences.",
+    stack: "Node.js, Dialogflow, Firebase",
+  },
+  {
+    href: "https://github.com/Chancemuhayimana/",
+    img: "/voting.jpg",
+    alt: "Voting System",
+    title: "Voting System",
+    summary: "Secure online election workflow with role-based controls.",
+    stack: "Java, Spring Boot, MySQL",
+  },
+  {
+    href: "https://github.com/Chancemuhayimana/Employee-Management-System",
+    img: "/employee.jpg",
+    alt: "Employee Management System",
+    title: "Employee Management",
+    summary: "Admin dashboard for staff profiles, salaries, and leave tracking.",
+    stack: "PHP, Laravel, Blade",
+  },
+  {
+    href: "#",
+    img: "/ecommerce.png",
+    alt: "E-commerce Platform",
+    title: "Faith Apparel E-commerce",
+    summary: "Full checkout flow with catalog, cart, and conversion-focused product pages.",
+    stack: "React, TypeScript, Node.js, Express, EmailJS",
+  },
+];
+
+const heroTitleVariants = [
+  "Professional Digital Products",
+  "High-Impact Web Platforms",
+  "Modern UI/UX Experiences",
+  "AI-Powered Solutions",
+];
+
 const Navbar = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const handleStateChange = (state) => setMenuOpen(state.isOpen);
   const closeMenu = () => setMenuOpen(false);
+  const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   return (
     <Nav>
-      <DesktopMenu>
-        <Logo>MUHAYIMANA Chance</Logo>
-        <NavLinks>
-          <NavItem to="hero" smooth>Home</NavItem>
-          <NavItem to="services" smooth>Services</NavItem>
-          <NavItem to="skills" smooth>Skills</NavItem>
-          <NavItem to="projects" smooth>Projects</NavItem>
-          <NavItem to="education" smooth>Education</NavItem>
-          <NavItem to="contact" smooth>Contact</NavItem>
-        </NavLinks>
-      </DesktopMenu>
+      <Container>
+        <DesktopMenu>
+          <Logo>MUHAYIMANA Chance</Logo>
+          <NavLinks>
+            <NavItem to="hero" smooth duration={500}>Home</NavItem>
+            <NavItem to="roles" smooth duration={500}>Roles</NavItem>
+            <NavItem to="services" smooth duration={500}>Services</NavItem>
+            <NavItem to="projects" smooth duration={500}>Projects</NavItem>
+            <NavItem to="education" smooth duration={500}>Education</NavItem>
+            <NavItem to="contact" smooth duration={500}>Contact</NavItem>
+          </NavLinks>
+        </DesktopMenu>
 
-      <MobileMenu>
-        <Menu right isOpen={isMenuOpen} onStateChange={handleStateChange}>
-          <Link className="menu-item" to="hero" smooth onClick={closeMenu}>Home</Link>
-          <Link className="menu-item" to="services" smooth onClick={closeMenu}>Services</Link>
-          <Link className="menu-item" to="skills" smooth onClick={closeMenu}>Skills</Link>
-          <Link className="menu-item" to="projects" smooth onClick={closeMenu}>Projects</Link>
-          <Link className="menu-item" to="education" smooth onClick={closeMenu}>Education</Link>
-          <Link className="menu-item" to="contact" smooth onClick={closeMenu}>Contact</Link>
-        </Menu>
-      </MobileMenu>
+        <MobileMenu>
+          <Logo>Chance</Logo>
+          <Menu
+            right
+            width={"78%"}
+            isOpen={isMenuOpen}
+            onStateChange={handleStateChange}
+            onClose={closeMenu}
+            disableAutoFocus
+          >
+            <button type="button" className="menu-close-btn" onClick={toggleMenu}>
+              Close
+            </button>
+            <Link className="menu-item" to="hero" smooth duration={500} onClick={closeMenu}>Home</Link>
+            <Link className="menu-item" to="roles" smooth duration={500} onClick={closeMenu}>Roles</Link>
+            <Link className="menu-item" to="services" smooth duration={500} onClick={closeMenu}>Services</Link>
+            <Link className="menu-item" to="projects" smooth duration={500} onClick={closeMenu}>Projects</Link>
+            <Link className="menu-item" to="education" smooth duration={500} onClick={closeMenu}>Education</Link>
+            <Link className="menu-item" to="contact" smooth duration={500} onClick={closeMenu}>Contact</Link>
+          </Menu>
+        </MobileMenu>
+      </Container>
     </Nav>
   );
 };
 
-// ---------- HERO ----------
-const Hero = () => (
-  <Section id="hero" dark>
-    <HeroContent>
-      <ProfileImage src={profileImage} alt="Profile" />
-      <h1>Hello, I’m <span>Chance</span></h1>
-      <p>I Build Scalable Web Apps, AI Solutions & Smart IT Systems.</p>
+const Hero = () => {
+  const [titleIndex, setTitleIndex] = useState(0);
+  const [typedTitle, setTypedTitle] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
 
-      <SocialLinks>
-        <a href="tel:+250789344652"><FaPhone size={28} /></a>
-        <a href="https://github.com/Chancemuhayimana" target="_blank" rel="noreferrer"><FaGithub size={28} /></a>
-        <a href="https://linkedin.com/in/muhayimana-chance-developer" target="_blank" rel="noreferrer"><FaLinkedin size={28} /></a>
-        <a href="https://x.com/MuhayimanaChan2" target="_blank" rel="noreferrer"><FaXTwitter size={28} /></a>
-        <a href="https://www.instagram.com/mchancerw" target="_blank" rel="noreferrer"><FaInstagram size={28} /></a>
-        <a href="https://www.facebook.com/muhayimana.chance" target="_blank" rel="noreferrer"><FaFacebook size={28} /></a>
-        <a href="https://www.tiktok.com/@mchancerw" target="_blank" rel="noreferrer"><FaTiktok size={28} /></a>
-      </SocialLinks>
+  useEffect(() => {
+    const currentTitle = heroTitleVariants[titleIndex];
+    const typingSpeed = isDeleting ? 45 : 90;
+    const fullWordPause = 1300;
+    const betweenWordsDelay = 260;
 
-      <CTA>
-        <a href="#projects">View Projects</a>
-        <a href={resumePDF} download="MUHAYIMANA_Chance_Resume.pdf">View Resume</a>
-        <a href="#contact" className="primary">Hire Me</a>
-      </CTA>
-    </HeroContent>
+    let timer;
+
+    if (!isDeleting && typedTitle === currentTitle) {
+      timer = setTimeout(() => setIsDeleting(true), fullWordPause);
+    } else if (isDeleting && typedTitle === "") {
+      timer = setTimeout(() => {
+        setIsDeleting(false);
+        setTitleIndex((prev) => (prev + 1) % heroTitleVariants.length);
+      }, betweenWordsDelay);
+    } else {
+      timer = setTimeout(() => {
+        setTypedTitle((prev) =>
+          isDeleting
+            ? currentTitle.slice(0, Math.max(prev.length - 1, 0))
+            : currentTitle.slice(0, prev.length + 1)
+        );
+      }, typingSpeed);
+    }
+
+    return () => clearTimeout(timer);
+  }, [typedTitle, isDeleting, titleIndex]);
+
+  return (
+    <HeroSection id="hero">
+      <Container>
+        <HeroGrid>
+          <HeroText>
+            <Pill>Available for Freelance & Remote Roles</Pill>
+            <h1>
+              I Design and Build{" "}
+              <span>
+                <RotatingText>{typedTitle}</RotatingText>
+                <Cursor>|</Cursor>
+              </span>
+            </h1>
+            <p>
+              Full-stack developer and UI/UX-focused creator helping brands ship websites,
+              AI-driven tools, and engaging tech experiences.
+            </p>
+
+            <RoleChips>
+              <Chip>Freelancer</Chip>
+              <Chip>YouTube Tech</Chip>
+              <Chip>UI/UX Designer</Chip>
+              <Chip>Software Engineer</Chip>
+            </RoleChips>
+
+            <CTA>
+              <a href="#projects" className="primary">View Projects <FaArrowRight size={12} /></a>
+              <a href={resumePDF} download="MUHAYIMANA_Chance_Resume.pdf">Download Resume</a>
+              <a href="#contact">Hire Me</a>
+            </CTA>
+
+            <SocialLinks>
+              <a href="tel:+250789344652" aria-label="Phone"><FaPhone size={22} /></a>
+              <a href="https://github.com/Chancemuhayimana" target="_blank" rel="noreferrer" aria-label="GitHub"><FaGithub size={22} /></a>
+              <a href="https://linkedin.com/in/muhayimana-chance-developer" target="_blank" rel="noreferrer" aria-label="LinkedIn"><FaLinkedin size={22} /></a>
+              <a href="https://x.com/MuhayimanaChan2" target="_blank" rel="noreferrer" aria-label="X"><FaXTwitter size={22} /></a>
+              <a href="https://www.instagram.com/muhayimana.chance" target="_blank" rel="noreferrer" aria-label="Instagram"><FaInstagram size={22} /></a>
+              <a href="https://www.facebook.com/muhayimana.chance" target="_blank" rel="noreferrer" aria-label="Facebook"><FaFacebook size={22} /></a>
+              <a href="https://www.tiktok.com/@mchancerw" target="_blank" rel="noreferrer" aria-label="TikTok"><FaTiktok size={22} /></a>
+            </SocialLinks>
+          </HeroText>
+
+          <HeroVisual>
+            <PhotoWrap>
+              <ProfileImage src={profileImage} alt="MUHAYIMANA Chance" />
+            </PhotoWrap>
+            <StatsGrid>
+              <StatCard>
+                <h3>3+</h3>
+                <p>Years Building</p>
+              </StatCard>
+              <StatCard>
+                <h3>20+</h3>
+                <p>Completed Projects</p>
+              </StatCard>
+              <StatCard>
+                <h3>4</h3>
+                <p>Professional Roles</p>
+              </StatCard>
+            </StatsGrid>
+          </HeroVisual>
+        </HeroGrid>
+      </Container>
+    </HeroSection>
+  );
+};
+
+const ProfessionalRoles = () => (
+  <Section id="roles">
+    <Container>
+      <SectionTitle>Professional Roles</SectionTitle>
+      <SectionLead>
+        I combine engineering, design, and content to deliver products that are useful, polished, and scalable.
+      </SectionLead>
+      <CardGrid>
+        {roles.map((role) => (
+          <Card key={role.title}>
+            <IconBubble>{role.icon}</IconBubble>
+            <h3>{role.title}</h3>
+            <p>{role.description}</p>
+          </Card>
+        ))}
+      </CardGrid>
+    </Container>
   </Section>
 );
 
-// ---------- SERVICES ----------
 const Services = () => (
-  <Section id="services">
-    <h2>What I Do</h2>
-    <CardGrid>
-      <Card><FaLaptopCode size={40} /> <h3>Web Development</h3></Card>
-      <Card><FaRobot size={40} /> <h3>AI & Chatbot Development</h3></Card>
-      <Card><FaCogs size={40} /> <h3>IoT & Automation</h3></Card>
-      <Card><FaNetworkWired size={40} /> <h3>IT Support / Networking</h3></Card>
-      <Card><FaPhone size={40} /> <h3>Virtual Assistant</h3></Card>
-    </CardGrid>
+  <Section id="services" tone="light">
+    <Container>
+      <SectionTitle>Services</SectionTitle>
+      <SectionLead>
+        End-to-end support from concept and design to production deployment.
+      </SectionLead>
+      <CardGrid>
+        {services.map((service) => (
+          <Card key={service.title}>
+            <IconBubble>{service.icon}</IconBubble>
+            <h3>{service.title}</h3>
+          </Card>
+        ))}
+      </CardGrid>
+    </Container>
   </Section>
 );
 
-// ---------- SKILLS ----------
 const Skills = () => (
-  <Section id="skills" dark>
-    <h2>Languages & Skills</h2>
-    <CardGrid>
-      <Card>Python</Card>
-      <Card>JavaScript</Card>
-      <Card>Java</Card>
-      <Card>HTML / CSS</Card>
-      <Card>React</Card>
-      <Card>Node.js</Card>
-      <Card>MySQL</Card>
-      <Card>MongoDB</Card>
-      <Card>Git / GitHub</Card>
-      <Card>Problem-Solving & Debugging</Card>
-      <Card>Team Management</Card>
-      <Card>Adaptive</Card>
-      <Card>Able to Work Under Pressure</Card>
-    </CardGrid>
+  <Section id="skills">
+    <Container>
+      <SectionTitle>Tech Stack</SectionTitle>
+      <SkillCloud>
+        {skillItems.map((skill) => (
+          <SkillPill key={skill}>{skill}</SkillPill>
+        ))}
+      </SkillCloud>
+    </Container>
   </Section>
 );
 
-// ---------- PROJECTS ----------
 const Projects = () => (
-  <Section id="projects">
-    <h2>Projects</h2>
-    <CardGrid>
-      <ProjectCard>
-        <a href="https://github.com/Chancemuhayimana/portfolio-vite" target="_blank" rel="noreferrer">
-          <img src="/portifolio.png" alt="Portfolio Website" />
-          <h3>💼 Portfolio Website</h3>
-          <p>Responsive personal portfolio</p>
-          <p>Tech: React, Vite, styled-components</p>
-        </a>
-      </ProjectCard>
-
-      <ProjectCard>
-        <a href="https://github.com/Chancemuhayimana/Music-Player" target="_blank" rel="noreferrer">
-          <img src="/music-player.jpg" alt="Music Player" />
-          <h3>🎵 Music Player</h3>
-          <p>Web-based player with playlists</p>
-          <p>Tech: React, Node.js, Express</p>
-        </a>
-      </ProjectCard>
-
-      <ProjectCard>
-        <a href="https://github.com/Chancemuhayimana/AI-Quiz-Generator" target="_blank" rel="noreferrer">
-          <img src="/quiz.jpg" alt="AI Quiz Generator" />
-          <h3>❓ AI Quiz Generator</h3>
-          <p>Dynamic quiz app with AI</p>
-          <p>Tech: Python, Flask, OpenAI API</p>
-        </a>
-      </ProjectCard>
-
-      <ProjectCard>
-        <a href="https://github.com/Chancemuhayimana/Therapist-Chatbot" target="_blank" rel="noreferrer">
-          <img src="/chatbot.jpg" alt="Therapist Chatbot" />
-          <h3>🧠 Therapist Chatbot</h3>
-          <p>AI-powered mental health bot</p>
-          <p>Tech: Node.js, Dialogflow, Firebase</p>
-        </a>
-      </ProjectCard>
-
-      <ProjectCard>
-        <a href="https://github.com/Chancemuhayimana/Online-Voting-System" target="_blank" rel="noreferrer">
-          <img src="/voting.jpg" alt="Voting System" />
-          <h3>🗳️ Voting System</h3>
-          <p>Secure online voting platform</p>
-          <p>Tech: Java, Spring Boot, MySQL</p>
-        </a>
-      </ProjectCard>
-
-      <ProjectCard>
-        <a href="https://github.com/Chancemuhayimana/Employee-Management-System" target="_blank" rel="noreferrer">
-          <img src="/employee.jpg" alt="Employee Management System" />
-          <h3><FaPeopleGroup style={{ verticalAlign: "middle", marginRight: 8 }} /> Employee Management</h3>
-          <p>Managing employee salaries & leaves</p>
-          <p>Tech: PHP, Laravel, Blade</p>
-        </a>
-      </ProjectCard>
-
-      <ProjectCard>
-        <a href="#" target="_blank" rel="noreferrer">
-          <img src="/ecommerce.png" alt="E-commerce Platform" />
-          <h3>🛍️✝️ Full-Stack Store for a Faith-Based Clothing Brand</h3>
-          <p>A complete e-commerce web application built for a Christian apparel brand.
-             It features a dynamic product catalog with search, a client-side shopping cart,
-             a multi-step checkout with live currency conversion, and an admin-ready interface.</p>
-          <p>Tech: React, TypeScript, Node.js, Express, React Context API, EmailJS</p>
-        </a>
-      </ProjectCard>
-    </CardGrid>
+  <Section id="projects" tone="light">
+    <Container>
+      <SectionTitle>Featured Projects</SectionTitle>
+      <ProjectGrid>
+        {projectItems.map((project) => (
+          <ProjectCard key={project.title}>
+            <a href={project.href} target="_blank" rel="noreferrer">
+              <img src={project.img} alt={project.alt} />
+              <h3>{project.title}</h3>
+              <p>{project.summary}</p>
+              <small>{project.stack}</small>
+            </a>
+          </ProjectCard>
+        ))}
+      </ProjectGrid>
+    </Container>
   </Section>
 );
 
-// ---------- EDUCATION ----------
 const Education = () => (
-  <Section id="education" dark>
-    <h2>🎓 Education & Certificates</h2>
-    <EduGrid>
-      <EduCard>
-        <FaGraduationCap size={36} color="#0af" />
-        <h3>Bachelor of Technology in IT</h3>
-        <p className="institution">RP HUYE (Rwanda Polytechnic)</p>
-        <p className="year">2022 - 2025</p>
-        <p className="details">Relevant coursework: Data Structures & Algorithms, Database Management, Web Development, AI Fundamentals.</p>
-      </EduCard>
+  <Section id="education">
+    <Container>
+      <SectionTitle>Education & Certificates</SectionTitle>
+      <EduGrid>
+        <EduCard>
+          <FaGraduationCap size={30} />
+          <h3>Bachelor of Technology in IT</h3>
+          <p className="institution">RP HUYE (Rwanda Polytechnic)</p>
+          <p className="year">2022 - 2025</p>
+          <p className="details">Data Structures, Databases, Web Development, and AI fundamentals.</p>
+        </EduCard>
 
-      <EduCard>
-        <FaCertificate size={36} color="#0af" />
-        <h3>AI Career Essentials</h3>
-        <p className="institution">ALX</p>
-        <p className="year">Issued: May 2024</p>
-      </EduCard>
+        <EduCard>
+          <FaCertificate size={30} />
+          <h3>Introduction to Data Science</h3>
+          <p className="institution">Cisco</p>
+          <p className="year">Issued: Feb 2026</p>
+        </EduCard>
 
-      <EduCard>
-        <FaCertificate size={36} color="#0af" />
-        <h3>Virtual Assistant</h3>
-        <p className="institution">ALX</p>
-        <p className="year">Issued: October 2024</p>
-      </EduCard>
+        <EduCard>
+          <FaCertificate size={30} />
+          <h3>Virtual Assistant</h3>
+          <p className="institution">ALX</p>
+          <p className="year">Issued: October 2024</p>
+        </EduCard>
 
-      <EduCard>
-        <FaCertificate size={36} color="#0af" />
-        <h3>Android Fundamentals</h3>
-        <p className="institution">Udacity</p>
-        <p className="year">Issued: February 2025</p>
-      </EduCard>
-    </EduGrid>
+        <EduCard>
+          <FaCertificate size={30} />
+          <h3>Android Fundamentals</h3>
+          <p className="institution">Udacity</p>
+          <p className="year">Issued: February 2025</p>
+        </EduCard>
+
+        <EduCard>
+          <h3>+more</h3>
+        </EduCard>
+      </EduGrid>
+    </Container>
   </Section>
 );
 
-// ---------- CONTACT ----------
 const Contact = () => {
-  const form = useRef();
+  const form = useRef(null);
+
   const sendEmail = (e) => {
     e.preventDefault();
     emailjs
@@ -249,28 +425,32 @@ const Contact = () => {
   };
 
   return (
-    <Section id="contact">
-      <h2>Contact Me</h2>
-      <Form ref={form} onSubmit={sendEmail}>
-        <input type="text" name="name" placeholder="Your Name" required />
-        <input type="email" name="email" placeholder="Your Email" required />
-        <textarea name="message" placeholder="Your Message" required />
-        <button type="submit">Send Message</button>
-      </Form>
+    <Section id="contact" tone="light">
+      <Container>
+        <SectionTitle>Let&apos;s Work Together</SectionTitle>
+        <SectionLead>
+          Share your project idea and I will reply with a clear plan and timeline.
+        </SectionLead>
+        <Form ref={form} onSubmit={sendEmail}>
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="email" name="email" placeholder="Your Email" required />
+          <textarea name="message" placeholder="Your Message" required />
+          <button type="submit">Send Message</button>
+        </Form>
+      </Container>
     </Section>
   );
 };
 
-
-// ---------- FOOTER ----------
 const Footer = () => (
-  <FooterBar> 
-    <p>© {new Date().getFullYear()} MUHAYIMANA Chance. All rights reserved.</p>
+  <FooterBar>
+    <Container>
+      <p>{new Date().getFullYear()} MUHAYIMANA Chance. All rights reserved.</p>
+    </Container>
   </FooterBar>
 );
 
-// ---------- MAIN APP ----------
-export default function App() {
+export default function Home() {
   useEffect(() => {
     const injectScript = document.createElement("script");
     injectScript.src = "https://cdn.botpress.cloud/webchat/v3.2/inject.js";
@@ -291,8 +471,10 @@ export default function App() {
 
   return (
     <>
+      <GlobalStyle />
       <Navbar />
       <Hero />
+      <ProfessionalRoles />
       <Services />
       <Skills />
       <Projects />
@@ -303,141 +485,629 @@ export default function App() {
   );
 }
 
-// ---------- STYLES ----------
+const fadeUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const blink = keyframes`
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+`;
+
+const GlobalStyle = createGlobalStyle`
+  :root {
+    --bg: #001b22;
+    --bg-soft: #003845;
+    --surface: #004c5e;
+    --surface-soft: #005f73;
+    --text: #e7f6f4;
+    --muted: #9cc9c3;
+    --accent: #005f73;
+    --accent-soft: #0a9396;
+    --stroke: rgba(255, 255, 255, 0.12);
+    --shadow: rgba(3, 9, 20, 0.35);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background:
+      radial-gradient(circle at top right, rgba(10, 147, 150, 0.18), transparent 35%),
+      radial-gradient(circle at left, rgba(0, 95, 115, 0.24), transparent 30%),
+      var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  h1, h2, h3 {
+    line-height: 1.2;
+    letter-spacing: 0.2px;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  iframe[src*="botpress"],
+  iframe[src*="bpcontent"],
+  [id*="bp-web-widget"],
+  [id*="botpress"],
+  [class*="bpWebchat"],
+  [class*="botpress"] {
+    z-index: 1100 !important;
+  }
+`;
+
+const Container = styled.div`
+  width: min(1120px, 92%);
+  margin: 0 auto;
+`;
+
 const Nav = styled.nav`
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: #111;
-  padding: 1rem 2rem;
+  backdrop-filter: blur(10px);
+  background: rgba(10, 21, 38, 0.82);
+  border-bottom: 1px solid var(--stroke);
+  animation: ${fadeUp} 420ms ease;
 `;
 
 const Logo = styled.h1`
-  font-size: 1.5rem;
-  color: #0af;
+  font-size: 1rem;
   font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--accent);
 `;
 
 const DesktopMenu = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  @media (max-width: 768px) { display: none; }
+  justify-content: space-between;
+  min-height: 72px;
+
+  @media (max-width: 860px) {
+    display: none;
+  }
 `;
 
 const NavLinks = styled.div`
   display: flex;
-  gap: 1.5rem;
+  gap: 1.4rem;
 `;
 
 const NavItem = styled(Link)`
-  color: #fff;
+  color: var(--muted);
   cursor: pointer;
-  text-decoration: none;
-  &:hover { color: #0af; }
+  font-size: 0.95rem;
+  transition: color 0.25s ease;
+
+  &:hover {
+    color: var(--text);
+  }
 `;
 
 const MobileMenu = styled.div`
   display: none;
-  @media (max-width: 768px) { display: block; }
-  .bm-burger-button { position: fixed; width: 30px; height: 25px; right: 2rem; top: 1.25rem; }
-  .bm-burger-bars { background: #0af; }
-  .bm-cross { background: #fff; }
-  .bm-menu { background: #111; padding: 2.5em 1.5em 0; font-size: 1.2em; }
-  .menu-item { padding: 0.8em; color: #fff; text-decoration: none; }
-  .menu-item:hover { color: #0af; }
-`;
 
-const Section = styled.section`
-  padding: 5rem 2rem;
-  text-align: center;
-  background: ${({ dark }) =>
-    dark
-      ? "linear-gradient(135deg, #111, #222)"
-      : "linear-gradient(135deg, #0a0a0a, #1a1a1a)"};
-  color: #fff;
+  @media (max-width: 860px) {
+    iframe[src*="botpress"],
+    iframe[src*="bpcontent"],
+    [id*="bp-web-widget"],
+    [id*="botpress"],
+    [class*="bpWebchat"],
+    [class*="botpress"] {
+      right: 12px !important;
+      left: auto !important;
+      bottom: 12px !important;
+      max-width: calc(100vw - 24px) !important;
+    }
 
-  h2 {
-    margin-bottom: 2rem;
-    font-size: 2.4rem;
-    color: #0af;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 70px;
+
+    .bm-burger-button {
+      position: fixed;
+      width: 28px;
+      height: 22px;
+      right: 16px;
+      top: 22px;
+    }
+
+    .bm-burger-bars {
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .bm-cross {
+      background: var(--text);
+    }
+
+    .bm-cross-button {
+      top: 16px !important;
+      right: 16px !important;
+    }
+
+    .bm-menu-wrap {
+      position: fixed !important;
+      top: 0 !important;
+      right: 0 !important;
+      width: min(82vw, 320px) !important;
+      height: 100vh !important;
+      z-index: 1300 !important;
+    }
+
+    .bm-menu {
+      background: rgba(0, 27, 34, 0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-left: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 1.1rem 1rem 1.5rem;
+      font-size: 1rem;
+      overflow-y: auto;
+    }
+
+    .bm-overlay {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      background: rgba(0, 0, 0, 0.38) !important;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      z-index: 1200 !important;
+    }
+
+    .bm-item-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      padding-top: 0.2rem;
+    }
+
+    .bm-item {
+      display: block !important;
+    }
+
+    .menu-close-btn {
+      align-self: flex-end;
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 0.4rem 0.7rem;
+      font: inherit;
+      cursor: pointer;
+      margin-bottom: 0.3rem;
+    }
+
+    .menu-item {
+      display: block;
+      padding: 0.85em 0.75em;
+      color: var(--text);
+      text-decoration: none;
+      border: 1px solid transparent;
+      border-radius: 10px;
+    }
+
+    .menu-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.16);
+    }
   }
 `;
 
-const HeroContent = styled.div`
-  max-width: 800px;
-  margin: auto;
-  h1 { font-size: 3rem; line-height: 1.1; }
-  span { color: #0af; }
-  p { margin: 1rem 0; color: #ccc; }
+const HeroSection = styled.section`
+  padding: 4.5rem 0 3.5rem;
 `;
 
-const ProfileImage = styled.img`
-  width: 160px; height: 160px; border-radius: 50%;
-  margin-bottom: 1rem; border: 3px solid #0af;
-  box-shadow: 0 0 20px rgba(0, 170, 255, 0.5);
-  object-fit: cover;
+const HeroGrid = styled.div`
+  display: grid;
+  gap: 2.4rem;
+  grid-template-columns: 1.3fr 1fr;
+  align-items: center;
+
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
-const SocialLinks = styled.div`
-  margin: 1rem 0; display: flex; justify-content: center; gap: 1.2rem;
-  a { color: #fff; transition: 0.3s; }
-  a:hover { color: #0af; transform: scale(1.1); }
+const HeroText = styled.div`
+  animation: ${fadeUp} 0.5s ease;
+
+  h1 {
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    margin: 0.95rem 0 0.8rem;
+  }
+
+  h1 span {
+    color: var(--accent);
+  }
+
+  p {
+    color: var(--muted);
+    max-width: 60ch;
+  }
+`;
+
+const HeroVisual = styled.div`
+  animation: ${fadeUp} 0.65s ease;
+`;
+
+const Pill = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid var(--stroke);
+  color: var(--accent-soft);
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  letter-spacing: 0.3px;
+`;
+
+const RoleChips = styled.div`
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+`;
+
+const Chip = styled.span`
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.35rem 0.78rem;
+  font-size: 0.82rem;
+`;
+
+const RotatingText = styled.span`
+  display: inline-block;
+  min-height: 1.1em;
+`;
+
+const Cursor = styled.span`
+  margin-left: 0.2rem;
+  opacity: 0.8;
+  animation: ${blink} 1s steps(1) infinite;
 `;
 
 const CTA = styled.div`
-  margin-top: 1rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
-  a { padding: 0.8rem 1.5rem; border-radius: 30px; background: #333; color: #fff; text-decoration: none; transition: 0.3s; }
-  a:hover { background: #0af; color: #000; }
-  .primary { background: #0af; color: #000; font-weight: 700; }
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-top: 1.3rem;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.72rem 1.05rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text);
+    border: 1px solid var(--stroke);
+    background: rgba(255, 255, 255, 0.02);
+    transition: all 0.25s ease;
+  }
+
+  a:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  .primary {
+    background: var(--accent);
+    color: var(--text);
+    border-color: transparent;
+    font-weight: 700;
+  }
+`;
+
+const SocialLinks = styled.div`
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+
+  a {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    border: 1px solid var(--stroke);
+    color: var(--text);
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  a:hover {
+    color: var(--text);
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+`;
+
+const PhotoWrap = styled.div`
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(10, 147, 150, 0.2), rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--stroke);
+  padding: 0.8rem;
+`;
+
+const ProfileImage = styled.img`
+  width: 100%;
+  max-height: 430px;
+  object-fit: cover;
+  border-radius: 14px;
+`;
+
+const StatsGrid = styled.div`
+  margin-top: 0.9rem;
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(3, 1fr);
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const StatCard = styled.div`
+  padding: 0.8rem;
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  text-align: center;
+
+  h3 {
+    color: var(--accent);
+    font-size: 1.2rem;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+`;
+
+const Section = styled.section`
+  padding: 4rem 0;
+  background: ${({ tone }) => (tone === "light" ? "rgba(255, 255, 255, 0.02)" : "transparent")};
+`;
+
+const SectionTitle = styled.h2`
+  font-size: clamp(1.6rem, 2.8vw, 2.3rem);
+  text-align: center;
+  color: var(--text);
+`;
+
+const SectionLead = styled.p`
+  text-align: center;
+  color: var(--muted);
+  margin: 0.7rem auto 1.8rem;
+  max-width: 68ch;
 `;
 
 const CardGrid = styled.div`
-  display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
 `;
 
-const Card = styled.div`
-  background: #1c1c1c; padding: 2rem; border-radius: 12px; color: #fff;
-  box-shadow: 0 6px 14px rgba(0,0,0,.35);
-  transition: transform .3s, box-shadow .3s, border .3s;
-  border: 1px solid transparent;
-  h3 { margin-top: .75rem; }
-  &:hover { transform: translateY(-6px); box-shadow: 0 14px 26px rgba(0,170,255,.18); border-color: rgba(0,170,255,.25); }
+const Card = styled.article`
+  border: 1px solid var(--stroke);
+  border-radius: 14px;
+  padding: 1.15rem;
+  background: var(--surface);
+  box-shadow: 0 10px 24px var(--shadow);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+
+  h3 {
+    margin: 0.65rem 0 0.4rem;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: 0.93rem;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 95, 115, 0.6);
+  }
 `;
 
-const ProjectCard = styled.div`
-  background: #1c1c1c; padding: 1rem; border-radius: 12px; transition: transform .3s, box-shadow .3s;
-  img { width: 100%; height: 180px; border-radius: 8px; object-fit: cover; margin-bottom: .5rem; }
-  h3 { margin: .5rem 0; color: #0af; display:flex; align-items:center; gap:.4rem; }
-  p { font-size: .9rem; color: #ccc; }
-  &:hover { transform: translateY(-6px); box-shadow: 0 10px 20px rgba(0,170,255,.2); }
-  a { color: inherit; text-decoration: none; display:block; }
+const IconBubble = styled.span`
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: inline-grid;
+  place-items: center;
+  color: var(--text);
+  background: linear-gradient(135deg, var(--accent), #0a9396);
+`;
+
+const SkillCloud = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  justify-content: center;
+`;
+
+const SkillPill = styled.span`
+  border: 1px solid var(--stroke);
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 0.48rem 0.85rem;
+  font-size: 0.9rem;
+`;
+
+const ProjectGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+`;
+
+const ProjectCard = styled.article`
+  border: 1px solid var(--stroke);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--surface-soft);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+
+  a {
+    display: block;
+    text-decoration: none;
+  }
+
+  img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+  }
+
+  h3 {
+    font-size: 1.04rem;
+    margin: 0.9rem 0.9rem 0.45rem;
+  }
+
+  p {
+    margin: 0 0.9rem 0.55rem;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  small {
+    display: block;
+    margin: 0 0.9rem 1rem;
+    color: var(--accent-soft);
+    font-size: 0.83rem;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0, 95, 115, 0.6);
+  }
 `;
 
 const EduGrid = styled.div`
-  display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
 `;
 
-const EduCard = styled.div`
-  background: rgba(32,32,32,.96); padding: 2rem; border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,.45); text-align: left; transition: transform .3s, box-shadow .3s, border .3s;
-  border: 1px solid transparent;
-  h3 { margin-top: 1rem; font-size: 1.1rem; color: #fff; }
-  .institution { font-size: .95rem; color: #bbb; margin: .3rem 0; }
-  .year { font-size: .92rem; color: #0af; font-weight: 600; margin-bottom: .6rem; }
-  .details { font-size: .9rem; color: #ddd; line-height: 1.45; }
-  &:hover { transform: translateY(-6px); box-shadow: 0 14px 26px rgba(0,170,255,.18); border-color: rgba(0,170,255,.25); }
+const EduCard = styled.article`
+  border: 1px solid var(--stroke);
+  border-radius: 14px;
+  background: var(--surface);
+  padding: 1rem;
+
+  svg {
+    color: var(--accent);
+  }
+
+  h3 {
+    margin: 0.8rem 0 0.45rem;
+    font-size: 1.04rem;
+  }
+
+  .institution,
+  .details {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .year {
+    color: var(--accent-soft);
+    font-size: 0.88rem;
+    margin: 0.3rem 0 0.45rem;
+  }
 `;
 
 const Form = styled.form`
-  display: flex; flex-direction: column; gap: 1rem; max-width: 520px; margin: auto;
-  input, textarea { padding: .9rem 1rem; border-radius: 10px; border: 1px solid #2a2a2a; background:#0f0f0f; color:#fff; }
-  textarea { min-height: 140px; resize: vertical; }
-  input::placeholder, textarea::placeholder { color:#8a8a8a; }
-  button { padding: 1rem; background: #0af; border: none; border-radius: 30px; font-weight: 700; cursor: pointer; color:#000; }
-  button:hover { filter: brightness(1.05); }
+  max-width: 620px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+
+  input,
+  textarea {
+    border: 1px solid var(--stroke);
+    border-radius: 10px;
+    padding: 0.86rem 0.95rem;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text);
+    font: inherit;
+  }
+
+  textarea {
+    min-height: 138px;
+    resize: vertical;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--muted);
+  }
+
+  button {
+    border: 0;
+    border-radius: 10px;
+    padding: 0.82rem 1rem;
+    background: var(--accent);
+    color: var(--text);
+    cursor: pointer;
+    font-weight: 700;
+  }
 `;
 
 const FooterBar = styled.footer`
-  background: #000; text-align: center; padding: 1rem; color: #888;
+  border-top: 1px solid var(--stroke);
+  background: rgba(5, 12, 22, 0.7);
+  padding: 1rem 0;
+
+  p {
+    color: var(--muted);
+    text-align: center;
+    font-size: 0.9rem;
+  }
 `;
