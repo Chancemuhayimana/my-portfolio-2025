@@ -450,6 +450,59 @@ const Footer = () => (
   </FooterBar>
 );
 
+const BuyMeACoffeeButton = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setIsVisible(true), 250);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  return (
+    <div
+      className={[
+        "group fixed bottom-24 right-4 z-[1050] sm:bottom-28 sm:right-5",
+        "transition-all duration-500 ease-out motion-reduce:transition-none",
+        isVisible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0",
+      ].join(" ")}
+    >
+      <div className="relative">
+        <span
+          className={[
+            "pointer-events-none absolute bottom-full right-0 mb-2 whitespace-nowrap rounded-full",
+            "bg-slate-950/90 px-3 py-1 text-xs font-medium text-white shadow-lg",
+            "transition-all duration-200",
+            "opacity-0 translate-y-1 group-hover:translate-y-0 group-hover:opacity-100",
+            "group-focus-within:translate-y-0 group-focus-within:opacity-100",
+          ].join(" ")}
+          role="tooltip"
+        >
+          Support me
+        </span>
+
+        <a
+          href="https://buymeacoffee.com/chancerw"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Support me on Buy Me a Coffee"
+          title="Support me"
+          className={[
+            "flex h-12 w-12 items-center justify-center rounded-full",
+            "border border-white/15 bg-amber-500 text-xl text-slate-950 shadow-xl",
+            "backdrop-blur-sm transition-transform duration-200",
+            "hover:scale-105 focus-visible:scale-105 focus-visible:outline-none",
+            "focus-visible:ring-2 focus-visible:ring-amber-200 focus-visible:ring-offset-2",
+            "focus-visible:ring-offset-slate-900",
+            "sm:h-14 sm:w-14 sm:text-2xl",
+          ].join(" ")}
+        >
+          <span aria-hidden="true">☕</span>
+        </a>
+      </div>
+    </div>
+  );
+};
+
 export default function Home() {
   useEffect(() => {
     const injectScript = document.createElement("script");
@@ -481,6 +534,7 @@ export default function Home() {
       <Education />
       <Contact />
       <Footer />
+      <BuyMeACoffeeButton />
     </>
   );
 }
